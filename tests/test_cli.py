@@ -61,6 +61,25 @@ def test_analyze_min_savings_filters_suggestions(capsys: pytest.CaptureFixture[s
     assert json.loads(out)["suggestions"] == []
 
 
+def test_analyze_group_by_project_text(capsys: pytest.CaptureFixture[str]) -> None:
+    code = main(["analyze", CLAUDE_FIXTURE, CODEX_FIXTURE, "--group-by", "project"])
+    out = capsys.readouterr().out
+
+    assert code == 0
+    assert "Grouped by project" in out
+    assert "Sessions ranked by cost" in out
+
+
+def test_analyze_group_by_day_json(capsys: pytest.CaptureFixture[str]) -> None:
+    code = main(["analyze", CLAUDE_FIXTURE, CODEX_FIXTURE, "--format", "json", "--group-by", "day"])
+    out = capsys.readouterr().out
+
+    assert code == 0
+    data = json.loads(out)
+    assert data["aggregate"]["group_by"] == "day"
+    assert len(data["aggregate"]["sessions"]) == 2
+
+
 def test_sessions_lists_fixtures(capsys: pytest.CaptureFixture[str]) -> None:
     code = main(["sessions", CLAUDE_FIXTURE, CODEX_FIXTURE])
     out = capsys.readouterr().out

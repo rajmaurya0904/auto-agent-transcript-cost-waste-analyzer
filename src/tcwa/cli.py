@@ -10,6 +10,12 @@ from datetime import date
 from pathlib import Path
 
 from tcwa import __version__
+from tcwa.aggregate import (
+    GROUP_CHOICES,
+    aggregate_sessions,
+    aggregate_to_dict,
+    render_aggregate_text,
+)
 from tcwa.discovery import UnknownFormatError, detect_format, discover_sessions
 from tcwa.models import Session
 from tcwa.parse_claude import parse_claude_session
@@ -76,12 +82,29 @@ def cmd_analyze(args: argparse.Namespace) -> int:
             s for s in report.suggestions if s.estimated_dollars_saved >= args.min_savings
         ]
 
+    agg = None
+    if args.group_by:
+        agg = aggregate_sessions(
+            sessions,
+            group_by=args.group_by,
+            oversized_threshold=args.threshold,
+            overrides=overrides,
+        )
+
     if args.format == "json":
         output = render_json(report)
+        if agg is not None:
+            data = json.loads(output)
+            data["aggregate"] = aggregate_to_dict(agg)
+            output = json.dumps(data, indent=2) + "\n"
     elif args.format == "markdown":
         output = render_markdown(report, top_n=args.top)
+        if agg is not None:
+            output += "\n" + render_aggregate_text(agg, top_n=args.top)
     else:
         output = render_text(report, top_n=args.top)
+        if agg is not None:
+            output += "\n" + render_aggregate_text(agg, top_n=args.top)
     sys.stdout.write(output)
     return 0
 
@@ -181,6 +204,13 @@ def build_parser() -> argparse.ArgumentParser:
         default=0.0,
         dest="min_savings",
         help="Only show suggestions estimated to save at least this many dollars",
+    )
+    analyze_p.add_argument(
+        "--group-by",
+        choices=GROUP_CHOICES,
+        default=None,
+        dest="group_by",
+        help="Also rank sessions by cost and merge findings into project or day buckets",
     )
     analyze_p.set_defaults(func=cmd_analyze)
 
