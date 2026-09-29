@@ -62,6 +62,7 @@ class Turn:
     role: str = "assistant"
     timestamp: datetime | None = None
     model: str | None = None
+    is_sidechain: bool = False
     usage: Usage = field(default_factory=Usage)
     tool_calls: list[ToolCall] = field(default_factory=list)
     tool_results: list[ToolResult] = field(default_factory=list)
