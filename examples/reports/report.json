@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "sessions": 2,
+  "usage": {
+    "input_tokens": 1870,
+    "output_tokens": 740,
+    "cache_read_tokens": 14480,
+    "cache_creation_tokens": 5700
+  },
+  "cost": 0.122166,
+  "cache_hit_ratio": 0.6566893424036281,
+  "tool_spend": [
+    {
+      "tool": "Bash",
+      "calls": 2,
+      "output_tokens": 10898,
+      "carried_tokens": 43592,
+      "cost": 0.051564399999999996
+    },
+    {
+      "tool": "Read",
+      "calls": 6,
+      "output_tokens": 866,
+      "carried_tokens": 2612,
+      "cost": 0.005785
+    },
+    {
+      "tool": "Edit",
+      "calls": 2,
+      "output_tokens": 20,
+      "carried_tokens": 40,
+      "cost": 0.00024239999999999998
+    }
+  ],
+  "rereads": [
+    {
+      "path": "payment_service.go",
+      "reads": 3,
+      "wasted_reads": 2,
+      "wasted_tokens": 243
+    },
+    {
+      "path": "src/auth/login_handler.py",
+      "reads": 3,
+      "wasted_reads": 1,
+      "wasted_tokens": 175
+    }
+  ],
+  "oversized": [
+    {
+      "tool": "Bash",
+      "command": "cat /var/log/demo-app/access.log",
+      "estimated_tokens": 5673,
+      "is_truncated": false,
+      "has_no_limit": false
+    },
+    {
+      "tool": "Bash",
+      "command": "bash -lc go test ./... -run TestPayment -v",
+      "estimated_tokens": 5225,
+      "is_truncated": false,
+      "has_no_limit": false
+    }
+  ],
+  "cache_misses": [
+    {
+      "turn_index": 4,
+      "cache_creation_tokens": 4200,
+      "gap_seconds": 9.0,
+      "prefix_changed": true,
+      "extra_cost": 0.0567
+    }
+  ],
+  "suggestions": [
+    {
+      "category": "cache_miss",
+      "message": "Batch work to stay within cache TTL",
+      "estimated_tokens_saved": 4200,
+      "estimated_dollars_saved": 0.0567
+    },
+    {
+      "category": "oversized_output",
+      "message": "Add head/tail or grep filter to cat /var/log/demo-app/access.log",
+      "estimated_tokens_saved": 4538,
+      "estimated_dollars_saved": 0.004538
+    },
+    {
+      "category": "oversized_output",
+      "message": "Add head/tail or grep filter to bash -lc go test ./... -run TestPayment -v",
+      "estimated_tokens_saved": 4180,
+      "estimated_dollars_saved": 0.00418
+    },
+    {
+      "category": "repeated_reread",
+      "message": "Note file payment_service.go in CLAUDE.md to avoid re-reads",
+      "estimated_tokens_saved": 243,
+      "estimated_dollars_saved": 0.000243
+    },
+    {
+      "category": "repeated_reread",
+      "message": "Note file src/auth/login_handler.py in CLAUDE.md to avoid re-reads",
+      "estimated_tokens_saved": 175,
+      "estimated_dollars_saved": 0.000175
+    }
+  ]
+}
