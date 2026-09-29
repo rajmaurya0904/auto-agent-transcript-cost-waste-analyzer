@@ -1,0 +1,16 @@
+{"timestamp":"2025-09-01T10:00:00Z","type":"session_meta","payload":{"id":"codex-sess-1","cwd":"/repo"}}
+{"timestamp":"2025-09-01T10:00:01Z","type":"turn_context","payload":{"model":"gpt-5-codex"}}
+{"timestamp":"2025-09-01T10:00:02Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"fix it"}]}}
+{"timestamp":"2025-09-01T10:00:03Z","type":"response_item","payload":{"type":"reasoning","summary":[]}}
+{"timestamp":"2025-09-01T10:00:03Z","type":"response_item","payload":{"type":"function_call","name":"shell","arguments":"{\"command\":[\"bash\",\"-lc\",\"cat a.py\"]}","call_id":"call_1"}}
+{"timestamp":"2025-09-01T10:00:04Z","type":"event_msg","payload":{"type":"token_count","info":null}}
+{"timestamp":"2025-09-01T10:00:04Z","type":"event_msg","payload":{"type":"token_count","info":{"total_token_usage":{"input_tokens":100,"cached_input_tokens":20,"output_tokens":30,"reasoning_output_tokens":10,"total_tokens":130}}}}
+{"timestamp":"2025-09-01T10:00:05Z","type":"response_item","payload":{"type":"function_call_output","call_id":"call_1","output":"{\"output\":\"print(1)\\n\",\"metadata\":{\"exit_code\":0}}"}}
+{"timestamp":"2025-09-01T10:00:06Z","type":"response_item","payload":{"type":"custom_tool_call","name":"apply_patch","input":"*** Begin Patch\n*** End Patch","call_id":"call_2"}}
+{"timestamp":"2025-09-01T10:00:06Z","type":"response_item","payload":{"type":"function_call","name":"read_file","arguments":"{\"path\":\"b.py\"}","call_id":"call_3"}}
+{"timestamp":"2025-09-01T10:00:07Z","type":"event_msg","payload":{"type":"token_count","info":{"total_token_usage":{"input_tokens":260,"cached_input_tokens":120,"output_tokens":70,"reasoning_output_tokens":20,"total_tokens":330}}}}
+{"timestamp":"2025-09-01T10:00:07Z","type":"event_msg","payload":{"type":"token_count","info":{"total_token_usage":{"input_tokens":260,"cached_input_tokens":120,"output_tokens":70,"reasoning_output_tokens":20,"total_tokens":330}}}}
+{"timestamp":"2025-09-01T10:00:08Z","type":"response_item","payload":{"type":"custom_tool_call_output","call_id":"call_2","output":"patched"}}
+{"timestamp":"2025-09-01T10:00:08Z","type":"response_item","payload":{"type":"function_call_output","call_id":"call_3","output":"{\"output\":\"nope\",\"metadata\":{\"exit_code\":1}}"}}
+{"timestamp":"2025-09-01T10:00:09Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"done"}]}}
+{"timestamp":"2025-09-01T10:00:10Z","type":"event_msg","payload":{"type":"token_count","info":{"total_token_usage":{"input_tokens":400,"cached_input_tokens":250,"output_tokens":90,"reasoning_output_tokens":25,"total_tokens":490}}}}
